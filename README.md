@@ -1,3 +1,10 @@
+
+Spektor56 fork for Honda on clarity copied vanillagorillaa and wirelessnet2 fingerprinting for the Clarity and braking due to being different on other Honda's.  
+
+
+!!!!Regen pedals acts like OEM openpilot will not brake if you hit them This is the same behavior as the LKAS OEM!!!!
+
+
 ![](https://user-images.githubusercontent.com/37757984/127420744-89ca219c-8f8e-46d3-bccf-c1cb53b81bb1.png)
 
 Table of Contents
