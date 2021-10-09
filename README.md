@@ -24,6 +24,7 @@ Table of Contents
 
 What does this fork do?
 ------
+Spektor56 fork for Honda on clarity copied vanillagorillaa and wirelessnet2 fingerprinting for the Clarity and braking due to being different on other Honda's.  !!!!Regen pedals acts like OEM openpilot will not brake if you hit them This is the same behavior as the LKAS OEM!!!!
 
 The purpose of this fork is to make the transition from Honda Safety Sense to openpilot as seamless as possible. All the information necessary to operate the system can be found in the vehicles owners manual. This fork replicates the behaviour of Honda Safety Sense as accurately as possible with the following changes:
 
