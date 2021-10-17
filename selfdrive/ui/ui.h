@@ -55,7 +55,7 @@ typedef struct Alert {
   QString type;
   cereal::ControlsState::AlertSize size;
   AudibleAlert sound;
-  bool equal(const Alert &a2) {
+  bool equal(Alert a2) {
     return text1 == a2.text1 && text2 == a2.text2 && type == a2.type;
   }
 } Alert;
@@ -69,7 +69,8 @@ const Alert CONTROLS_UNRESPONSIVE_ALERT = {"TAKE CONTROL IMMEDIATELY", "Controls
                                            AudibleAlert::CHIME_WARNING_REPEAT};
 const int CONTROLS_TIMEOUT = 5;
 
-const int bdr_s = 30;
+const int bdr_s = 10;
+const int bdr_is = 30;
 const int header_h = 420;
 const int footer_h = 280;
 
@@ -104,6 +105,28 @@ typedef struct UIScene {
   bool world_objects_visible;
 
   cereal::PandaState::PandaType pandaType;
+
+  int lead_status;
+  float lead_d_rel;
+  float lead_v_rel;
+  float angleSteers;
+  bool brakePressed;
+  float angleSteersDes;
+  bool recording;
+  float gpsAccuracyUblox;
+  float altitudeUblox;
+  int engineRPM;
+  int dashcamX;
+  int dashcamY;
+  float aEgo;
+  float steeringTorqueEps;
+  bool steeringPressed;
+  bool enabled;
+  float pidStateOutput;
+  int cpuUsagePercent;
+  float cpu0TempC;
+  int satelliteCount;
+  bool computerBraking;
 
   // modelV2
   float lane_line_probs[4];
