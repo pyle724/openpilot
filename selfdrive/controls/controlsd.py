@@ -161,6 +161,7 @@ class Controls:
     self.current_alert_types = [ET.PERMANENT]
     self.logged_comm_issue = False
     self.button_timers = {ButtonEvent.Type.decelCruise: 0, ButtonEvent.Type.accelCruise: 0}
+    self.epsAlertDisplayed = False					   
 
     # TODO: no longer necessary, aside from process replay
     self.sm['liveParameters'].valid = True
@@ -297,6 +298,9 @@ class Controls:
     planner_fcw = self.sm['longitudinalPlan'].fcw and self.enabled
     if planner_fcw or model_fcw:
       self.events.add(EventName.fcw)
+    if not self.CP.epsFound and not self.epsAlertDisplayed:
+      self.events.add(EventName.epsNotFound)
+      self.epsAlertDisplayed = True														   
 
     if TICI:
       logs = messaging.drain_sock(self.log_sock, wait_for_one=False)
