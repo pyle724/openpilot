@@ -131,7 +131,18 @@ def get_can_signals(CP, gearbox_msg, main_on_sig_msg):
                 ("EPB_STATE", "EPB_STATUS", 0)]
     checks += [
       ("HUD_SETTING", 50),
+      ("EPB_STATUS", 50),					   
+    ]
+  elif CP.carFingerprint == CAR.CLARITY: #Clarity
+    signals += [("CAR_GAS", "GAS_PEDAL_2", 0),
+                ("MAIN_ON", "SCM_FEEDBACK", 0),
+                ("EPB_STATE", "EPB_STATUS", 0),
+                ("BRAKE_ERROR_1", "BRAKE_ERROR", 0),
+                ("BRAKE_ERROR_2", "BRAKE_ERROR", 0)]
+    checks += [
+      ("BRAKE_ERROR", 100),
       ("EPB_STATUS", 50),
+      ("GAS_PEDAL_2", 100),
     ]
   elif CP.carFingerprint in (CAR.ODYSSEY, CAR.ODYSSEY_CHN):
     signals += [("EPB_STATE", "EPB_STATUS", 0)]
@@ -213,6 +224,8 @@ class CarState(CarStateBase):
 
     if not self.CP.openpilotLongitudinalControl:
       self.brake_error = 0
+    elif self.CP.carFingerprint == CAR.CLARITY:
+      self.brake_error = cp.vl["BRAKE_ERROR"]['BRAKE_ERROR_1'] or cp.vl["BRAKE_ERROR"]['BRAKE_ERROR_2']
     else:
       self.brake_error = cp.vl["STANDSTILL"]["BRAKE_ERROR_1"] or cp.vl["STANDSTILL"]["BRAKE_ERROR_2"]
     ret.espDisabled = cp.vl["VSA_STATUS"]["ESP_DISABLED"] != 0
@@ -245,7 +258,7 @@ class CarState(CarStateBase):
     self.rightBlinkerOn = cp.vl["SCM_FEEDBACK"]["RIGHT_BLINKER"] != 0
 
     if self.CP.carFingerprint in (CAR.CIVIC, CAR.ODYSSEY, CAR.ODYSSEY_CHN, CAR.CRV_5G, CAR.ACCORD, CAR.ACCORDH, CAR.CIVIC_BOSCH,
-                                  CAR.CIVIC_BOSCH_DIESEL, CAR.CRV_HYBRID, CAR.INSIGHT, CAR.ACURA_RDX_3G, CAR.HONDA_E):
+                                  CAR.CIVIC_BOSCH_DIESEL, CAR.CRV_HYBRID, CAR.INSIGHT, CAR.ACURA_RDX_3G, CAR.HONDA_E, CAR.CLARITY):
       self.park_brake = cp.vl["EPB_STATUS"]["EPB_STATE"] != 0
     else:
       self.park_brake = 0  # TODO
