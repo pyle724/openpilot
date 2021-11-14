@@ -103,8 +103,7 @@ struct CarEvent @0x9b1657f34caf3ad3 {
     driverCameraError @101;
     wideRoadCameraError @102;
     localizerMalfunction @103;
-    highCpuUsage @105;
-    epsNotFound @106;						   
+    highCpuUsage @105;						   
 
     driverMonitorLowAccDEPRECATED @68;
     manualSteeringRequired @106;
@@ -113,6 +112,7 @@ struct CarEvent @0x9b1657f34caf3ad3 {
     silentButtonEnable @109;
     silentBrakeHold @110;
     silentWrongGear @111;
+    epsNotFound @112;
 
     radarCanErrorDEPRECATED @15;
     radarCommIssueDEPRECATED @67;
