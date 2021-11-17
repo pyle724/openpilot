@@ -14,7 +14,6 @@ TransmissionType = car.CarParams.TransmissionType
 def get_can_signals(CP, gearbox_msg, main_on_sig_msg):
   # this function generates lists for signal, messages and initial values
   signals = [
-    ("ENGINE_RPM", "POWERTRAIN_DATA", 0),
     ("XMISSION_SPEED", "ENGINE_DATA", 0),
     ("WHEEL_SPEED_FL", "WHEEL_SPEEDS", 0),
     ("WHEEL_SPEED_FR", "WHEEL_SPEEDS", 0),
@@ -194,7 +193,6 @@ class CarState(CarStateBase):
     self.brake_switch_prev_ts = 0
     self.cruise_setting = 0
     self.v_cruise_pcm_prev = 0
-    self.engineRPM = 0
     
   def update(self, cp, cp_cam, cp_body):
     ret = car.CarState.new_message()
@@ -258,7 +256,7 @@ class CarState(CarStateBase):
 
     self.leftBlinkerOn = cp.vl["SCM_FEEDBACK"]["LEFT_BLINKER"] != 0
     self.rightBlinkerOn = cp.vl["SCM_FEEDBACK"]["RIGHT_BLINKER"] != 0
-    self.engineRPM = cp.vl["POWERTRAIN_DATA"]["ENGINE_RPM"]
+
     if self.CP.carFingerprint in (CAR.CIVIC, CAR.ODYSSEY, CAR.ODYSSEY_CHN, CAR.CRV_5G, CAR.ACCORD, CAR.ACCORDH, CAR.CIVIC_BOSCH,
                                   CAR.CIVIC_BOSCH_DIESEL, CAR.CRV_HYBRID, CAR.INSIGHT, CAR.ACURA_RDX_3G, CAR.HONDA_E, CAR.CLARITY):
       self.park_brake = cp.vl["EPB_STATUS"]["EPB_STATE"] != 0
