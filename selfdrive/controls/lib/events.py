@@ -359,6 +359,14 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
       Priority.LOW, VisualAlert.ldw, AudibleAlert.prompt, 3.),
   },
 
+  EventName.epsNotFound: {
+    ET.PERMANENT: Alert(
+      "EPS FW NOT FOUND",
+      "Reboot your Device: 1x Torque Applied",
+      AlertStatus.userPrompt, AlertSize.mid,
+      Priority.LOW, VisualAlert.none, AudibleAlert.none, 0., 0., 10.),
+  },
+
   # ********** events only containing alerts that display while engaged **********
 
   EventName.gasPressed: {

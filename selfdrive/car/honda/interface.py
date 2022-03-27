@@ -87,10 +87,22 @@ class CarInterface(CarInterfaceBase):
       ret.longitudinalTuning.kiBP = [0., 35.]
       ret.longitudinalTuning.kiV = [0.18, 0.12]
 
+    ret.epsFound = False
     eps_modified = False
+    eps_modified_3x = False
     for fw in car_fw:
-      if fw.ecu == "eps" and b"," in fw.fwVersion:
+      if fw.ecu == "eps":
+        ret.epsFound = True
+      if fw.ecu == "eps" and b"-" not in fw.fwVersion and b"," in fw.fwVersion:
+        eps_modified_3x = True
+        print("3x MODIFIED EPS DETECTED")
+      elif fw.ecu == "eps" and b"-" in fw.fwVersion and b"," in fw.fwVersion:
         eps_modified = True
+        print("2x MODIFIED EPS DETECTED")
+      elif fw.ecu == "eps" and b"," not in fw.fwVersion:
+        print("UNMODIFIED EPS DETECTED")
+    if not ret.epsFound:
+      print("EPS NOT DETECTED. THIS IS BAD!")
 
     if candidate == CAR.CIVIC:
       stop_and_go = True
@@ -308,18 +320,24 @@ class CarInterface(CarInterfaceBase):
       tire_stiffness_factor = 0.82
       ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.6], [0.18]] # TODO: can probably use some tuning
 
-    elif candidate == CAR.CLARITY:
+    elif candidate == CAR.CLARITY: #Clarity
       stop_and_go = True
       ret.mass = 4052. * CV.LB_TO_KG + STD_CARGO_KG
       ret.wheelbase = 2.75
       ret.centerToFront = ret.wheelbase * 0.4
-      ret.steerRatio = 16.50  # 12.72 is end-to-end spec
-      if eps_modified:
+      ret.steerRatio = 16.50  # was 17.03, 12.72 is end-to-end spec
+      if eps_modified_3x:
+        ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 0xA00, 0x3C00], [0, 2560, 3840]]
+        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.1575], [0.05175]]
+        print("clarity.brUHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH") # @clarity.bru: Hello =P -wirelessnet2
+      elif eps_modified:
         ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 0xA00, 0x2800], [0, 2560, 3840]]
         ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.3], [0.1]]
-      else:
+        print("!!!!!!!!!!!!!!!!!!2x MODIFIED TUNING VALUES USED!!!!!!!!!!!!!!!!!!")
+      else:  
         ret.lateralParams.torqueBP, ret.lateralParams.torqueV = [[0, 2560], [0, 2560]]
-        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.8], [0.24]]
+        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.8], [0.25]]
+        print("------------------UNMODIFIED TUNING VALUES USED------------------")
       tire_stiffness_factor = 1.
 
     else:
