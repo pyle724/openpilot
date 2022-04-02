@@ -68,8 +68,11 @@ void HomeWindow::showDriverView(bool show) {
 
 void HomeWindow::mousePressEvent(QMouseEvent* e) {
   // Handle sidebar collapsing
-  if (onroad->isVisible() && (!sidebar->isVisible() || e->x() > sidebar->width())) {
-    sidebar->setVisible(!sidebar->isVisible() && !onroad->isMapVisible());
+  if (onroad->isVisible() && (!sidebar->isVisible() || e->x() > sidebar->width()) && !(e->globalX() >= 1500 && e->globalY() >= 885)) {
+  //Handle Dashcam button events
+  if (onroad->isVisible()) {
+    QUIState::ui_state.scene.dashcamX = e->globalX();
+    QUIState::ui_state.scene.dashcamY = e->globalY();
   }
 }
 

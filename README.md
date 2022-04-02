@@ -1,10 +1,3 @@
-
-Spektor56 fork for Honda on clarity, copied vanillagorillaa and wirelessnet2 fingerprinting for the Clarity and braking lines for clarity - different on other Honda's.  
-
-
-!!!!Regen paddles acts like OEM LKAS openpilot will not brake if you hit them This is the same behavior as the LKAS OEM!!!!
-
-
 ![](https://user-images.githubusercontent.com/37757984/127420744-89ca219c-8f8e-46d3-bccf-c1cb53b81bb1.png)
 
 Table of Contents
@@ -31,8 +24,6 @@ Table of Contents
 
 What does this fork do?
 ------
-Spektor56 fork for Honda on clarity, copied vanillagorillaa and wirelessnet2 fingerprinting for the Clarity and braking lines for clarity - different on other Honda's.  
-
 
 The purpose of this fork is to make the transition from Honda Safety Sense to openpilot as seamless as possible. All the information necessary to operate the system can be found in the vehicles owners manual. This fork replicates the behaviour of Honda Safety Sense as accurately as possible with the following changes:
 
